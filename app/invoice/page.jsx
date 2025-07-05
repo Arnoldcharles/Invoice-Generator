@@ -18,8 +18,12 @@ export default function InvoicePage() {
 
   const updateItem = (index, field, value) => {
     const newItems = [...items];
-    newItems[index][field] =
-      field === "description" ? value : parseFloat(value);
+    if (field === "description") {
+      newItems[index][field] = value;
+    } else {
+      const parsed = parseFloat(value);
+      newItems[index][field] = isNaN(parsed) ? 0 : parsed;
+    }
     setItems(newItems);
   };
 
@@ -88,13 +92,13 @@ export default function InvoicePage() {
             <input
               type="number"
               placeholder="Qty"
-              value={item.quantity}
+              value={item.quantity || 0}
               onChange={(e) => updateItem(idx, "quantity", e.target.value)}
             />
             <input
               type="number"
               placeholder="Price"
-              value={item.price}
+              value={item.price || 0}
               onChange={(e) => updateItem(idx, "price", e.target.value)}
             />
           </div>
