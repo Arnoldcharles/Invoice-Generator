@@ -7,7 +7,9 @@ import Link from "next/link";
 export default function InvoicePage() {
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
-  const [items, setItems] = useState([{ description: "", quantity: 1, price: 0 }]);
+  const [items, setItems] = useState([
+    { description: "", quantity: 1, price: 0 },
+  ]);
   const [darkMode, setDarkMode] = useState(false);
 
   const addItem = () => {
@@ -16,11 +18,15 @@ export default function InvoicePage() {
 
   const updateItem = (index, field, value) => {
     const newItems = [...items];
-    newItems[index][field] = field === "description" ? value : parseFloat(value);
+    newItems[index][field] =
+      field === "description" ? value : parseFloat(value);
     setItems(newItems);
   };
 
-  const subtotal = items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.quantity * item.price,
+    0
+  );
   const tax = +(subtotal * 0.075).toFixed(2);
   const total = +(subtotal + tax).toFixed(2);
 
@@ -98,11 +104,20 @@ export default function InvoicePage() {
 
       <div className="invoice-preview" id="invoice-preview">
         <h2>Invoice Preview</h2>
-        <p><strong>Client:</strong> {clientName}</p>
-        <p><strong>Email:</strong> {clientEmail}</p>
+        <p>
+          <strong>Client:</strong> {clientName}
+        </p>
+        <p>
+          <strong>Email:</strong> {clientEmail}
+        </p>
         <table>
           <thead>
-            <tr><th>Description</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+            <tr>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
           </thead>
           <tbody>
             {items.map((item, i) => (
@@ -115,9 +130,15 @@ export default function InvoicePage() {
             ))}
           </tbody>
         </table>
-        <p><strong>Subtotal:</strong> ₦{subtotal.toFixed(2)}</p>
-        <p><strong>Tax (7.5%):</strong> ₦{tax.toFixed(2)}</p>
-        <p><strong>Total:</strong> ₦{total.toFixed(2)}</p>
+        <p>
+          <strong>Subtotal:</strong> ₦{subtotal.toFixed(2)}
+        </p>
+        <p>
+          <strong>Tax (7.5%):</strong> ₦{tax.toFixed(2)}
+        </p>
+        <p>
+          <strong>Total:</strong> ₦{total.toFixed(2)}
+        </p>
       </div>
 
       <div className="btn-group">
